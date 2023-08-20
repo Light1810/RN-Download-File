@@ -12,7 +12,6 @@
   "dependencies": {
     "react": "17.0.1",
     "react-native": "0.64.4",
-    "react-native-blob-util": "^0.16.4",
     "react-native-share": "^9.2.3",
     "rn-fetch-blob": "^0.12.0"
   },
