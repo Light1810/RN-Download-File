@@ -11,7 +11,6 @@ import React from 'react';
 import Share from 'react-native-share';
 import RNFetchBlob from 'rn-fetch-blob';
 import {
-  Alert,
   Button,
   Platform,
   SafeAreaView,
@@ -142,7 +141,7 @@ const App = () => {
         <View>
           <Button title ="Download PDF" onPress={()=> {downloadFile("https://www.africau.edu/images/default/sample.pdf")}}></Button>
           <Button title ="Share PDF " onPress={() => {sharePDF("https://www.africau.edu/images/default/sample.pdf",'application/pdf')}}></Button>
-          <Button title= "Downlaod data" onPress={ downloadData}></Button>
+          <Button title= "Download base64Data file" onPress={downloadData}></Button>
         </View>
     </SafeAreaView>
   );
