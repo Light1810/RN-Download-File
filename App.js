@@ -35,17 +35,20 @@ const App = () => {
 
   const sharePDF = (fileUrl, type) => {
     // let filePath = null;
+    let filePath = fileUrl;
     const title = 'Sharing PDF file';
     const configOptions = { fileCache: true };
     RNFetchBlob.config(configOptions)
       .fetch('GET', fileUrl)
+      .then(resp => {
+        filePath = resp.path();
+        return resp.readFile('base64');
+      })
       .then(async base64Data => {
         base64Data = `data:${type};base64,` + base64Data;
         const iosOptions = {
-          ios: {
-            url: base64Data,
-            title: 'File name soemhing'
-          },
+          url: base64Data,
+          title: 'File name something',
           default: {
             title,
             subject: title,
