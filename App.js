@@ -69,8 +69,8 @@ const App = () => {
       .catch((err) => { err && console.log('BLOB ERROR -> ',err); });
   }
 
-  const downloadFileWithRNFetchBlob =() => {
-    const url = "https://www.africau.edu/images/default/sample.pdf";
+  const downloadFile =(fileUrl) => {
+    const url = fileUrl;
     var fileName = url.substring(url.lastIndexOf('/')+1);
     const { config, fs } = RNFetchBlob;
     const downloads = fs.dirs.DownloadDir;
@@ -111,7 +111,7 @@ const App = () => {
   return (
     <SafeAreaView style={backgroundStyle}>
         <View>
-          <Button title ="Download PDF" onPress={downloadFileWithRNFetchBlob}></Button>
+          <Button title ="Download PDF" onPress={()=> {downloadFile("https://www.africau.edu/images/default/sample.pdf")}}></Button>
           <Button title ="Share PDF " onPress={() => {sharePDF("https://www.africau.edu/images/default/sample.pdf",'application/pdf')}}></Button>
         </View>
     </SafeAreaView>
