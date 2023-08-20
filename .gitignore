@@ -254,4 +254,6 @@ google-services.json
 # Android Profiling
 *.hprof
 
+#IOS Pods
+ios/Pods
 # End of https://www.toptal.com/developers/gitignore/api/reactnative
