@@ -24,7 +24,8 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
-
+import { pdfData } from './pdfData';
+import RNFS from 'react-native-fs';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -45,6 +46,7 @@ const App = () => {
         return resp.readFile('base64');
       })
       .then(async base64Data => {
+        console.log("orginal",base64Data);
         base64Data = `data:${type};base64,` + base64Data;
         const iosOptions = {
           url: base64Data,
@@ -58,6 +60,7 @@ const App = () => {
         const androidOption = {
           url: base64Data 
         }
+        console.log("modified",base64Data);
         let option = Platform.OS === 'ios' ? iosOptions : androidOption
 
         await Share.open(option)
@@ -108,11 +111,37 @@ const App = () => {
 
   }
 
+  const downloadData = () => {
+    // write the file
+    var iosPath = RNFS.DownloadDirectoryPath + '/sampleNew.pdf';
+    var path = RNFS.ExternalStorageDirectoryPath +'/Download' + '/sampleNew.pdf';
+    RNFS.writeFile(path, pdfData, 'base64')
+      .then(async () => {
+        console.log('FILE WRITTEN! IN STORAGE');
+        if (Platform.OS === 'ios') {
+          let options = {
+            type: 'application/pdf',
+            url: iosPath,
+            saveToFiles: true,
+          };
+          await Share.open(options)
+            .then((resp) => console.log(resp))
+            .catch((err) => console.log('SHARE ERROR -> ',err));
+        } else {
+          console.log('FILE WRITTEN! IN Android Downlaods STORAGE');
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+
   return (
     <SafeAreaView style={backgroundStyle}>
         <View>
           <Button title ="Download PDF" onPress={()=> {downloadFile("https://www.africau.edu/images/default/sample.pdf")}}></Button>
           <Button title ="Share PDF " onPress={() => {sharePDF("https://www.africau.edu/images/default/sample.pdf",'application/pdf')}}></Button>
+          <Button title= "Downlaod data" onPress={ downloadData}></Button>
         </View>
     </SafeAreaView>
   );
