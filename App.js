@@ -113,15 +113,16 @@ const App = () => {
 
   const downloadData = () => {
     // write the file
-    var iosPath = RNFS.DownloadDirectoryPath + '/sampleNew.pdf';
-    var path = RNFS.ExternalStorageDirectoryPath +'/Download' + '/sampleNew.pdf';
+    var iosPath = RNFS.DocumentDirectoryPath + '/sampleNewios.pdf';
+    var androidPath = RNFS.ExternalStorageDirectoryPath +'/Download' + '/sampleNew.pdf';
+    let path = Platform.OS ==='ios' ? iosPath : androidPath;
     RNFS.writeFile(path, pdfData, 'base64')
       .then(async () => {
         console.log('FILE WRITTEN! IN STORAGE');
         if (Platform.OS === 'ios') {
           let options = {
             type: 'application/pdf',
-            url: iosPath,
+            url: path,
             saveToFiles: true,
           };
           await Share.open(options)
